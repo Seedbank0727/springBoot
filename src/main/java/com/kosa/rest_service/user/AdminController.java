@@ -21,12 +21,12 @@ public class AdminController {
     @Autowired
     private UserService service;
 
-//    // UserService를 인자로 받아서 생성자로 생성하기
-//    // 생성자 생성하는 메서드 없애고
-//    // @RestController 위에 @AllArgs 어노테이션 붙여도 동일하다.
-////    public UserController(UserService service){
-////        this.service = service;
-////    }
+//     UserService를 인자로 받아서 생성자로 생성하기
+//     생성자 생성하는 메서드 없애고
+//     @RestController 위에 @AllArgs 어노테이션 붙여도 동일하다.
+//    public UserController(UserService service){
+//        this.service = service;
+//    }
 //
 //    @GetMapping("/users")
 //    public MappingJacksonValue retrieveAllUsers(){

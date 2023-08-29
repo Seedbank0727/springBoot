@@ -1,12 +1,13 @@
 package com.kosa.rest_service.user;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -16,7 +17,12 @@ import java.util.Date;
 @NoArgsConstructor
 //@JsonIgnoreProperties(value={"password", "ssn"})
 //@JsonFilter("UserInfo")
+@Entity
+@Table(name = "user2")
+
 public class User {
+    @Id
+    @GeneratedValue// 1씩 증가하는 옵션
     private Integer id;
 
     @Size(min = 2, message = "Name을 2글자 이상 입력하세요.")

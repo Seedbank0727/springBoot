@@ -19,7 +19,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/jpa")
 public class UserJpaController {
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository; //DAO
+
 //    public UserJpaController(UserService service){
 //        this.service = service;
 //    }
@@ -45,9 +46,9 @@ public class UserJpaController {
     public ResponseEntity createUser(@Valid @RequestBody User user) {
         User savedUser = userRepository.save(user);
 
-
         // 클라이언트가 방금 입력한 정보를 확인하고 싶을 수 있으므로
         // Header에 URI 정보를 준다.
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedUser.getId())

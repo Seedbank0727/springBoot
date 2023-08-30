@@ -19,7 +19,36 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/jpa")
 public class UserJpaController {
     @Autowired
-    private UserRepository userRepository; //DAO
+    private UserRepository userRepository; //User DAO
+
+    @Autowired
+    private PostRepository postRepository; //Post DAO
+
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Post> createPosts(@PathVariable int id,@RequestBody Post post){
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        post.setUser(user.get()); //post안에 User가 들어감
+        Post savePost = postRepository.save(post); //savePost는 미리 생성된 ID번호를 미리 지니고 있음(시퀀스 미리 실행)
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{postID}")
+                .buildAndExpand(savePost.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+    @GetMapping("/users/{id}/posts")
+    /**id에 해당하는 유저가 쓴 글의 목록*/
+    public List<Post> retrieveAllPostByUser(@PathVariable int id){
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        return user.get().getPosts();
+    }
 
 //    public UserJpaController(UserService service){
 //        this.service = service;
